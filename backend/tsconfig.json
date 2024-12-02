@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",                           // Versión de JavaScript que generará
+    "module": "CommonJS",                        // Usar el sistema de módulos CommonJS (Node.js)
+    "rootDir": "./",                             // Carpeta raíz del proyecto
+    "outDir": "./dist",                          // Carpeta donde se guardarán los archivos compilados
+    "strict": true,                              // Activar todas las comprobaciones estrictas
+    "esModuleInterop": true,                     // Habilitar interoperabilidad con módulos ES
+    "forceConsistentCasingInFileNames": true,    // Forzar consistencia en nombres de archivos
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./@types"], // Agrega la carpeta @types                
+  },
+  "include": ["./**/*.ts"],                      // Incluir todos los archivos TypeScript del proyecto
+  "exclude": ["node_modules", "dist"]           // Excluir carpetas no necesarias
+}

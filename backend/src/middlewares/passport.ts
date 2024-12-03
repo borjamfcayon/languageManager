@@ -4,7 +4,7 @@ import config from "../config/config";
 
 const opts: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: config.jwtSecret
+  secretOrKey: config.jwtSecret,
 };
 
 export default new Strategy(opts, async (payload, done) => {

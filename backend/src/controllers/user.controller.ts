@@ -1,55 +1,60 @@
+import mongoose from "mongoose";
+import User from "../models/user";
 import { Request, Response } from "express";
-import User, { IUser } from "../models/user";
-import jwt from "jsonwebtoken";
-import config from "../config/config";
 
-function createToken(user: IUser) {
-  return jwt.sign({ id: user.id, email: user.email }, config.jwtSecret, {
-    expiresIn: 86400
-  });
-}
-
-export const signUp = async (
+export const getAllUsers = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  if (!req.body.email || !req.body.password) {
-    return res
-      .status(400)
-      .json({ msg: "Please. Send your email and password" });
-  }
-
-  const user = await User.findOne({ email: req.body.email });
-  if (user) {
-    return res.status(400).json({ msg: "The User already Exists" });
-  }
-
-  const newUser = new User(req.body);
-  await newUser.save();
-  return res.status(201).json(newUser);
+  const users = await User.find();
+  return res.json(users);
 };
 
-export const signIn = async (
+export const getUserById = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  if (!req.body.email || !req.body.password) {
-    return res
-      .status(400)
-      .json({ msg: "Please. Send your email and password" });
-  }
+  const user = await User.findById(req.params.id);
+  return res.json(user);
+};
 
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) {
-    return res.status(400).json({ msg: "The User does not exists" });
-  }
+export const updateUser = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const {
+    name,
+    surname,
+    mainLanguage,
+    class: userClass,
+    role,
+  } = req.body as {
+    name: string;
+    surname: string;
+    email: string;
+    password: string;
+    mainLanguage: string;
+    class: mongoose.Types.ObjectId[];
+    role: string;
+  };
+  await User.findByIdAndUpdate(req.params.id, {
+    name,
+    surname,
+    mainLanguage,
+    class: userClass,
+    role,
+  });
+  return res.json({
+    msg: "User Updated Successfully",
+  });
+};
 
-  const isMatch = await user.comparePassword(req.body.password);
-  if (isMatch) {
-    return res.status(400).json({ token: createToken(user) });
-  }
-
-  return res.status(400).json({
-    msg: "The email or password are incorrect"
+export const deleteUser = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  await User.findByIdAndDelete(req.params.id);
+  return res.json({
+    msg: "User Deleted Successfully",
   });
 };

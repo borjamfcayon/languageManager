@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Schedule from "../models/schedule";
+import { getUserRole } from "./user.controller";
 
 export const getAllSchedules = async (
   req: Request,
@@ -25,6 +26,11 @@ export const createSchedule = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  const role = getUserRole(req);
+  if (role !== "admin" && role !== "teacher") {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
   const { day, hours } = req.body;
   const newSchedule = new Schedule({ day, hours });
   await newSchedule.save();
@@ -35,6 +41,11 @@ export const updateSchedule = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  const role = getUserRole(req);
+  if (role !== "admin" && role !== "teacher") {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
   const { id } = req.params;
   const { day, hours } = req.body;
   const updatedSchedule = await Schedule.findByIdAndUpdate(
@@ -52,6 +63,11 @@ export const deleteSchedule = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  const role = getUserRole(req);
+  if (role !== "admin" && role !== "teacher") {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
   const { id } = req.params;
   const deletedSchedule = await Schedule.findByIdAndDelete(id);
   if (!deletedSchedule) {

@@ -1,4 +1,4 @@
-import {Router} from 'express'
+import { Router } from 'express'
 import {
   signIn,
   signUp,
@@ -6,7 +6,7 @@ import {
 
 const router = Router();
 
-router.post('/signup', signUp);
-router.post('/signin', signIn);
+router.post('/register', signUp);
+router.post('/login', signIn);
 
 export default router;

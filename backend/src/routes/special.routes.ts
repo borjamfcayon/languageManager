@@ -30,6 +30,18 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   userController.deleteUser
 );
+
+router.get(
+  "/role",
+  passport.authenticate("jwt", { session: false }),
+  userController.getRole
+);
+
+router.get(
+  "/role/:role",
+  passport.authenticate("jwt", { session: false }),
+  userController.getUserByRole
+);
 ///#endregion
 
 //#region Class Routes

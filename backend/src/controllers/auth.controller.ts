@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 import config from "../config/config";
 
 function createToken(user: IUser) {
-  return jwt.sign({ id: user.id, email: user.email }, config.jwtSecret, {
-    expiresIn: 86400,
+  return jwt.sign({ id: user.id, email: user.email, role: user.role }, config.jwtSecret, {
+    expiresIn: 43200,
   });
 }
 

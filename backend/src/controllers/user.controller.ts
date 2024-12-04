@@ -54,32 +54,8 @@ export const updateUser = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
-  const {
-    name,
-    surname,
-    mainLanguage,
-    class: userClass,
-    role,
-  } = req.body as {
-    name: string;
-    surname: string;
-    email: string;
-    password: string;
-    mainLanguage: string;
-    class: mongoose.Types.ObjectId[];
-    role: string;
-  };
-  const userRole = getUserRole(req);
-  if (userRole !== "admin") {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-  await User.findByIdAndUpdate(req.params.id, {
-    name,
-    surname,
-    mainLanguage,
-    class: userClass,
-    role,
-  });
+  const data = req.body;
+  await User.findByIdAndUpdate(req.params.id, data);
   return res.json({
     msg: "User Updated Successfully",
   });
@@ -127,12 +103,58 @@ export const getUserByRole = async (req: Request, res: Response) => {
     return res.status(401).json({ error: "Unauthorized" });
   }
   try {
-    const user = await User.findOne({ role: req.params.role });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
+    const users = await User.find({ role: req.params.role });
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
     }
-    res.json(user);
+    res.json(users);
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
 };
+
+export const getAllUsersOfAClass = async (
+  req: Request, res: Response
+) => {
+  const classId = req.params.classId;
+  try {
+    const users = await User.find({ classes: classId });
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
+    }
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+export const getMyUserInfo = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ msg: "No token provided" });
+  }
+  const decoded: any = jwt.verify(token, config.jwtSecret);
+  const user = await User.findById(decoded.id, { password: 0 });
+  if (!user) {
+    return res.status(404).json({ msg: "No user found" });
+  }
+  return res.status(200).json(user);
+};
+
+export const getAllUsersByIds = async (
+  req: Request, res: Response
+) => {
+  const userIds = req.body.userIds;
+  try {
+    const users = await User.find({ _id: { $in: userIds } });
+    if (!users || users.length === 0) {
+      return res.status(404).json({ message: "No users found" });
+    }
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+}

@@ -38,7 +38,7 @@ const userSchema = new Schema({
   },
   class: [
     {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Class",
     },
   ],

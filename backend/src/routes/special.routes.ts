@@ -19,6 +19,23 @@ router.get(
   userController.getUserById
 );
 
+router.get(
+  "/usersInfo",
+  passport.authenticate("jwt", { session: false }),
+  userController.getMyUserInfo
+);
+
+router.get(
+  "/usersInfo/:classId",
+  passport.authenticate("jwt", { session: false }),
+  userController.getAllUsersOfAClass
+)
+router.post(
+  "/usersByIds",
+  passport.authenticate("jwt", { session: false }),
+  userController.getAllUsersByIds
+);
+
 router.put(
   "/users/:id",
   passport.authenticate("jwt", { session: false }),
@@ -58,6 +75,12 @@ router.get(
 );
 
 router.post(
+  "/classesByIds",
+  passport.authenticate("jwt", { session: false }),
+  classController.getClassesByIds
+);
+
+router.post(
   "/classes",
   passport.authenticate("jwt", { session: false }),
   classController.createClass
@@ -75,6 +98,11 @@ router.delete(
   classController.deleteClass
 );
 
+router.post(
+  "/classesNext",
+  passport.authenticate("jwt", { session: false }),
+  classController.getNextClasses
+);
 //#endregion
 
 //#region Schedule Routes
@@ -88,6 +116,12 @@ router.get(
   "/schedules/:id",
   passport.authenticate("jwt", { session: false }),
   scheduleController.getScheduleById
+);
+
+router.post(
+  "/schedules/ids",
+  passport.authenticate("jwt", { session: false }),
+  scheduleController.getScheduleByIds
 );
 
 router.post(

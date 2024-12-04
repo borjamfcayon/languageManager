@@ -75,3 +75,14 @@ export const deleteSchedule = async (
   }
   return res.status(204).json();
 };
+
+export const getScheduleByIds = async (req: Request, res: Response): Promise<Response> => {
+  const { ids } = req.body;
+
+  if (!ids || ids.length === 0) {
+    return res.json([]);
+  }
+
+  const schedules = await Schedule.find({ _id: { $in: ids } });
+  return res.json(schedules);
+};

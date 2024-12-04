@@ -11,6 +11,8 @@ export interface ISignUpData {
     name?: string;
     surname?: string;
     mainLanguage?: string;
+    role?: string;
+    class: string[];
 }
 
 export interface IAuthResponse {

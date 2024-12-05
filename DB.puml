@@ -1,0 +1,35 @@
+@startuml
+
+entity "User" as user {
+  +_id : ObjectId
+  +name : string
+  +surname : string
+  +email : string
+  +password : string
+  +mainLanguage : string
+  +role : string
+  +class : ObjectId[]
+  +comparePassword(password: string) : Promise<Boolean>
+}
+
+entity "Class" as class {
+  +_id : ObjectId
+  +language : string
+  +teacher : ObjectId
+  +imgUrl : string
+  +students : ObjectId[]
+  +schedules : ObjectId[]
+}
+
+entity "Schedule" as schedule {
+  +_id : ObjectId
+  +day : string
+  +hours : number[]
+}
+
+user -- "0..*" class : "belongs to"
+class -- "0..*" user : "has students"
+class -- "0..*" schedule : "has schedules"
+schedule -- "0..*" class : "assigned to"
+
+@enduml

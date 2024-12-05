@@ -10,6 +10,16 @@ import { IUser, useGetUserInfo, useUpdateUser } from "../../api/UserApi";
 import { IClassResponse, useUpdateClass } from "../../api/ClassApi";
 import { Loading } from "../Loading";
 
+const days = [
+  { day: "monday", name: "Lunes" },
+  { day: "tuesday", name: "Martes" },
+  { day: "wednesday", name: "Miércoles" },
+  { day: "thursday", name: "Jueves" },
+  { day: "friday", name: "Viernes" },
+  { day: "saturday", name: "Sábado" },
+  { day: "sunday", name: "Domingo" },
+];
+
 export const Schedules = ({
   schedules,
   classData,
@@ -86,7 +96,9 @@ export const Schedules = ({
       {data.map((schedule: IScheduleResponse) => (
         <div key={schedule._id} className="grid grid-cols-3 gap-4">
           <div className="col-span-1">
-            <h5 className="text-2xl font-bold">{schedule.day}</h5>
+            <h5 className="text-2xl font-bold">
+              {days.find((d) => d.day === schedule.day)?.name}
+            </h5>
           </div>
           <div className="col-span-1">
             <p className="text-2xl">{schedule.hours}:00</p>

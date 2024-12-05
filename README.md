@@ -2,47 +2,52 @@
 
 ## ¿Qué es?
 
-El 'Colegio de idiomas' es un proyecto que resolvera las necesidades de los profesores y alumnos a la hora de conocer los datos relevantes de cada asignatura:.
+El **'Colegio de idiomas'** es un proyecto que resolverá las necesidades de los profesores y alumnos a la hora de conocer los datos relevantes de cada asignatura.
 
-## ¿Que ofrece esta aplicación?
-- Gestion de usuarios por roles
+&nbsp;
+
+![Language Manager](frontend/src/assets/Logo.webp)
+
+## ¿Qué ofrece esta aplicación?
+
+- Gestión de usuarios por roles
 - Gestión de clases por roles
-- Asignación de clases global
+- Asignación global de clases
 - Gestión de horarios por roles
 
-## ¿Como se usa?
+## ¿Cómo se usa?
 
-La aplicación esta diseñada para ser usada con Node.js y MongoDB.
-Pasos:
-- Descargar o clonar el repositorio
-- Instalar paquetes con el comando 'npm i' tanto en la carpeta raíz como en su subcarpetas 'backend' y 'frontend'
-- Regresar a la carpeta raíz y ejecutar el comando 'npm run dev'
-- Tras unos segundos podras iniciar la app web en la url que le corresponda
+La aplicación está diseñada para ser usada con **Node.js** y **MongoDB**.
 
-## ¿Como esta diseñada la App?
+Pasos para la instalación y uso:
+1. Descargar o clonar el repositorio.
+2. Instalar los paquetes con el comando `npm i` tanto en la carpeta raíz como en sus subcarpetas **'backend'** y **'frontend'**.
+3. Regresar a la carpeta raíz y ejecutar el comando `npm run dev`.
+4. Tras unos segundos, podrás iniciar la app web en la URL correspondiente.
 
-La app esta relacionada por id entre varios documentos gracias a la api puesto que utiliza una base de datos no relacional como MongoDB:
+## ¿Cómo está diseñada la App?
 
-[insertar imagen de la db]
+La app está relacionada por ID entre varios documentos gracias a la API, ya que utiliza una base de datos no relacional como **MongoDB**.
 
-La api cuenta con varios metodos de tipo CRUD y más específicos como obtener el rol de una persona o identificar que horarios serán los proximos de cada clase.
+[insertar imagen de la base de datos]
+
+La API cuenta con varios métodos de tipo CRUD y otros más específicos, como obtener el rol de una persona o identificar cuáles serán los próximos horarios de cada clase.
 
 ### Login
 
-El sistema de registro dispone de 2 formularios diferentes que cambian dependiendo si el usuario quiere registrarse o iniciar sesión.
+El sistema de registro dispone de dos formularios diferentes que cambian dependiendo de si el usuario desea registrarse o iniciar sesión.
 
-Depende su decision se hara un fetch diferente con sus respectivas comprobaciones:
-- Registro:
-  - Fetch: '/register'
-  - Comprobacion de que en el body se haya pasado correctamente
-  - Comprobacion de que el email no está repetido
-  - Creación de nuevo usuario con los datos introducidos
+Dependiendo de la decisión, se realizará un **fetch** diferente con sus respectivas comprobaciones:
 
-- Inicio de sesión:
-  - Fetch: '/login'
-  - Comprobacion de que en el body se haya pasado correctamente
-  - Comprobacion de que existe un usuario con ese email
-  - Comprobación de que la contraseña es correcta
-  - Generación y envio de token
+- **Registro**:
+  - **Fetch**: `/register`
+  - Comprobación de que el body se haya enviado correctamente.
+  - Comprobación de que el email no está repetido.
+  - Creación de un nuevo usuario con los datos introducidos.
 
-    
+- **Inicio de sesión**:
+  - **Fetch**: `/login`
+  - Comprobación de que el body se haya enviado correctamente.
+  - Comprobación de que existe un usuario con ese email.
+  - Comprobación de que la contraseña es correcta.
+  - Generación y envío de un token.

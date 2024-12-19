@@ -27,9 +27,7 @@ entity "Schedule" as schedule {
   +hours : number[]
 }
 
-user -- "0..*" class : "belongs to"
-class -- "0..*" user : "has students"
-class -- "0..*" schedule : "has schedules"
-schedule -- "0..*" class : "assigned to"
+user "n" -- "n" class 
+class "1"-- "n" schedule 
 
 @enduml

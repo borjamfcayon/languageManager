@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+// Interfaz para definir la estructura de los documentos en la colección "Class".
 export interface IClass extends Document {
   language: string;
   teacher: mongoose.Types.ObjectId;
@@ -8,6 +9,7 @@ export interface IClass extends Document {
   schedules: mongoose.Types.ObjectId[];
 }
 
+// Esquema de Mongoose para la colección "Class".
 const ClassSchema: Schema = new Schema({
   language: { type: String, required: true },
   teacher: { type: mongoose.Types.ObjectId, ref: "User", required: true },
@@ -16,4 +18,5 @@ const ClassSchema: Schema = new Schema({
   schedules: [{ type: mongoose.Types.ObjectId, ref: "Schedule" }],
 });
 
+// Exportamos el modelo "Class" basado en el esquema y la interfaz.
 export default mongoose.model<IClass>("Class", ClassSchema);

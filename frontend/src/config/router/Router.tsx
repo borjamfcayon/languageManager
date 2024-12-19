@@ -7,30 +7,31 @@ import { Login } from "../../pages/public/Login";
 import { createBrowserRouter } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
-export const Router = createBrowserRouter([
+// Definición de las rutas de la aplicación usando createBrowserRouter
+export const Router = createBrowserRouter([  
   {
-    path: "/",
-    element: <RootLayout />,
-    children: [
+    path: "/", // Ruta raíz de la aplicación
+    element: <RootLayout />, // Componente que se muestra en la ruta raíz
+    children: [ // Rutas hijas de la ruta raíz
       {
-        index: true,
-        element: <Navigate to="/private" replace />,
+        index: true, // La ruta predeterminada si no se especifica una subruta
+        element: <Navigate to="/login" replace />, // Redirige a la página de login
       },
       {
-        path: "private",
-        element: <PrivateLayout />,
-        children: [
+        path: "private", // Ruta para la sección privada
+        element: <PrivateLayout />, // Layout para la sección privada
+        children: [ // Rutas hijas de la sección privada
           {
-            index: true,
-            element: <Home />
+            index: true, // Ruta predeterminada de la sección privada
+            element: <Home />, // Página de inicio de la sección privada
           },
           {
-            path: "all",
-            element: <AdminLayout />,
-            children: [
+            path: "all", // Ruta para la sección de administración de usuarios
+            element: <AdminLayout />, // Layout para la sección de administración
+            children: [ // Rutas hijas de la sección de administración
               {
-                index: true,
-                element: <AllUsers />
+                index: true, // Ruta predeterminada de la sección de administración
+                element: <AllUsers />, // Página que muestra todos los usuarios
               },
             ],
           },
@@ -39,11 +40,11 @@ export const Router = createBrowserRouter([
     ],
   },
   {
-    path: "login",
-    element: <Login />,
+    path: "login", // Ruta para la página de inicio de sesión
+    element: <Login />, // Página de inicio de sesión
   },
   {
-    path: "*",
-    element: <div>404 Not Found</div>,
+    path: "*", // Ruta para manejar rutas no encontradas (404)
+    element: <div>404 Not Found</div>, // Mensaje de error cuando la ruta no existe
   },
 ]);

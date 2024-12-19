@@ -1,6 +1,7 @@
 import mongoose, { model, Schema, Document } from "mongoose";
 import bcrypt from "bcrypt";
 
+// Interfaz para definir la estructura de los documentos en la colección "User".
 export interface IUser extends Document {
   name: string;
   surname: string;
@@ -9,9 +10,10 @@ export interface IUser extends Document {
   mainLanguage: string;
   class: mongoose.Types.ObjectId[];
   role: string;
-  comparePassword: (password: string) => Promise<Boolean>;
+  comparePassword: (password: string) => Promise<Boolean>; // Método para comparar contraseñas.
 }
 
+// Esquema de Mongoose para la colección "User".
 const userSchema = new Schema({
   email: {
     type: String,
@@ -48,6 +50,7 @@ const userSchema = new Schema({
   },
 });
 
+// Middleware para encriptar la contraseña antes de guardar un documento.
 userSchema.pre<IUser>("save", async function (next) {
   const user = this as IUser;
 
@@ -60,6 +63,7 @@ userSchema.pre<IUser>("save", async function (next) {
   next();
 });
 
+// Método para comparar una contraseña proporcionada con la encriptada.
 userSchema.methods.comparePassword = async function (
   password: string
 ): Promise<Boolean> {
@@ -67,4 +71,5 @@ userSchema.methods.comparePassword = async function (
   return await bcrypt.compare(password, user.password);
 };
 
+// Exporta el modelo "User" basado en el esquema y la interfaz.
 export default model<IUser>("User", userSchema);

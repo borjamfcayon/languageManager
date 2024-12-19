@@ -1,11 +1,11 @@
-import { Button, MenuItem, Select, TextField } from "@mui/material"; 
-import { useGetUsersByRole } from "../../api/RoleApi"; 
-import React from "react"; 
+import { Button, MenuItem, Select, TextField } from "@mui/material";
+import { useGetUsersByRole } from "../../api/RoleApi";
+import React from "react";
 import { IUser } from "../../api/UserApi";
-import { Loading } from "../Loading"; 
-import { Dispatch, SetStateAction } from "react"; 
+import { Loading } from "../Loading";
+import { Dispatch, SetStateAction } from "react";
 import { useCreateClass } from "../../api/ClassApi";
-import { useQueryClient } from "react-query"; 
+import { useQueryClient } from "react-query";
 
 // Componente AddClassForm para añadir una nueva clase
 export const AddClassForm = ({
@@ -40,6 +40,7 @@ export const AddClassForm = ({
       onSuccess: () => {
         // Invalidar las consultas de clases para asegurarse de que se actualicen después de la creación
         queryClient.invalidateQueries("classes");
+        queryClient.resetQueries(); // Reiniciar todas las consultas
         // Cerrar el diálogo de añadir clase
         setOpenAddDialog(false);
       },

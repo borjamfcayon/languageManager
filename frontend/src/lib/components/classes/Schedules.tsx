@@ -85,7 +85,10 @@ export const Schedules = ({
 
     // Actualiza los datos del usuario en la base de datos
     updateUser(newUser, {
-      onSuccess: () => queryClient.invalidateQueries("user"), // Invalida la consulta de usuario
+      onSuccess: () => {
+        queryClient.invalidateQueries("user");
+        queryClient.resetQueries();
+      }, // Invalida la consulta de usuario
     });
 
     // Actualiza la lista de estudiantes de la clase, agregando o eliminando al usuario
@@ -102,7 +105,10 @@ export const Schedules = ({
 
     // Actualiza los datos de la clase
     updateClass(newClass, {
-      onSuccess: () => queryClient.invalidateQueries("class"), // Invalida la consulta de la clase
+      onSuccess: () => {
+        queryClient.invalidateQueries("class");
+        queryClient.resetQueries();
+      }, // Invalida la consulta de la clase
     });
   };
 

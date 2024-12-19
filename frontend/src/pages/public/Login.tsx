@@ -37,6 +37,7 @@ export const Login = () => {
           // Almacena el token en el localStorage y redirige al usuario
           localStorage.setItem("token", response.token);
           queryClient.invalidateQueries("verifyToken"); // Invalida cualquier consulta relacionada con el token
+          queryClient.resetQueries(); // Reinicia todas las consultas
           navigate("/private"); // Navega a la página privada
         },
         onError: (error) => {

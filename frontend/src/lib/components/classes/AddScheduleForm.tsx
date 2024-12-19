@@ -1,8 +1,8 @@
-import React, { Dispatch, SetStateAction } from "react"; 
+import React, { Dispatch, SetStateAction } from "react";
 import { Select, MenuItem, Button } from "@mui/material";
-import { ISchedule, useCreateSchedule } from "../../api/ScheduleApi"; 
+import { ISchedule, useCreateSchedule } from "../../api/ScheduleApi";
 import { IClassResponse, useUpdateClass } from "../../api/ClassApi";
-import { useQueryClient } from "react-query"; 
+import { useQueryClient } from "react-query";
 
 // Componente para añadir un horario a una clase
 export const AddScheduleForm = ({
@@ -50,8 +50,9 @@ export const AddScheduleForm = ({
         updateClass(newClassData, {
           onSuccess: () => {
             // Resetear las consultas relacionadas con la clase y los horarios para forzar la actualización en la caché
-            queryClient.resetQueries("class");
-            queryClient.resetQueries("schedules");
+            queryClient.invalidateQueries("class");
+            queryClient.invalidateQueries("schedules");
+            queryClient.resetQueries();
             // Cerrar el formulario
             setView(false);
           },
